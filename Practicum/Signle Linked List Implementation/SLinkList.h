@@ -1,4 +1,4 @@
-#pragmaonce
+#pragma once
 
 class SLinkList{
     private:
@@ -18,10 +18,12 @@ class SLinkList{
         //Helper functions
         void copy(const SLinkList&);
         void clear();
+        void swapSecond(Node*& first, int element);
+        void pushBack(Node *& first, int data);
 
         public:
             SLinkList();
             SLinkList(const SLinkList&);
             SLinkList& operator=(const SLinkList&);
             ~SLinkList();
-}
+};

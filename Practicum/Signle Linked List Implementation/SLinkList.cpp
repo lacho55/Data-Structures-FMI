@@ -1,10 +1,9 @@
 #include "SLinkList.h"
 
 //Helper functions
+void SLinkList :: copy(const SLinkList& rhs){
 
-SLinkList :: copy(const SLinkList& rhs){
-
-    this->first = new Node(rhs.data->data);
+    this->first = new Node(rhs.first->data);
 
     Node* copy = rhs.first;
     Node* cur = this->first;
@@ -17,7 +16,7 @@ SLinkList :: copy(const SLinkList& rhs){
 }
 
 
-SLinkList :: clear(){
+void SLinkList :: clear(){
 
     Node* temp = nullptr;
 
@@ -30,7 +29,6 @@ SLinkList :: clear(){
     this->first = nullptr;
 }
 
-
 SLinkList :: SLinkList(){
     this->first = nullptr;
 }
@@ -41,7 +39,7 @@ SLinkList :: SLinkList(const SLinkList& rhs){
 }
 
 
-SLinkList :: operator=(const SLinkList& rhs){
+SLinkList&  SLinkList:: operator=(const SLinkList& rhs){
     if(this != &rhs){
         this->clear();
         this->copy(rhs);
