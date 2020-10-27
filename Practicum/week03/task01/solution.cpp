@@ -1,104 +1,64 @@
-#include <iostream>
-#include <string>
+#include<iostream>
+#include<string>
 
-//enum в public
 static unsigned currentNumber = 0;
 
-class Table
-{
-public:
-	enum Type { INT, STRING};
+class Table{
+    private:
+        std::string nameOfTable;
+        enum Type {INT, STRING} typeOfData;
+        int number;
 
-	Table()
-	{
-		nameOfTable = "name1";
-		typeOfData = Type::INT;
-		number = ++currentNumber;
-	}
+    public:
+        
 
-	Table(const std::string& name, Type type) //мога външно да достъпвам типовете на enum
-	{
-		nameOfTable = name;
-		typeOfData = type;
-		number = ++currentNumber;
-	}
+        Table(){
+            nameOfTable = "name1";
+            typeOfData = Type::INT;
+            number = ++currentNumber;
+        }
 
-	void print() const
-	{
-		std::cout << "Name of table: " << nameOfTable << ", type: " << typeOfData << ", number: " << number << std::endl;
-	}
 
-private:
-	std::string nameOfTable;
-	Type typeOfData;
-	int number;
+        Table(const std::string&name,const std::string& type){
+            nameOfTable = name;
+
+            if(type == "INT"){
+                typeOfData = Type::INT;
+
+            }else{
+                typeOfData = Type::STRING;
+            }  
+            number = ++currentNumber;
+
+        }
+
+
+        const std::string getType() const{
+            if(typeOfData == Type::INT){
+                return "INT";
+
+            }else{
+                return "STRING";
+            }
+        }
+
+
+        void print() const{
+            std::cout << "Name of table: " << nameOfTable << ", Type of data: " << getType() << ", Number: " << number << std::endl;
+        }
+
 };
 
-//enum в private
-class Table2
-{
-public:
-	Table2()
-	{
-		nameOfTable = "name1";
-		typeOfData = Type::INT;
-		number = ++currentNumber;
-	}
 
-	Table2(const std::string& name, const std::string& type) //не мога външно да достъпвам типовете на enum, затова използвам string
-	{
-		nameOfTable = name;
-		if (type == "INT")
-		{
-			typeOfData = Type::INT;
-		}
-		else
-		{
-			typeOfData = Type::STRING;
-		}
-		number = ++currentNumber;
-	}
 
-	const std::string getType() const //с++ не позволява типа на връщане да бъде const std::string&
-	{
-		if (typeOfData == Type::INT)
-		{
-			return "INT";
-		}
-		else
-		{
-			return "String";
-		}
-	}
+int main(){
+    Table table1;
+    Table table2("name2", "INT");
+    Table table3;
 
-	void print() const
-	{
-		std::cout << "Name of table: " << nameOfTable << ", type: " << getType() << ", number: " << number << std::endl;
-	}
+    table1.print();
+    table2.print();
+    table3.print();
 
-private:
-	std::string nameOfTable;
-	enum Type {INT, STRING} typeOfData;
-	int number;
-};
-
-int main()
-{
-	Table table1;
-	Table table2("name2", Table::Type::STRING);
-	Table table3;
-
-	table1.print();
-	table2.print();
-	table3.print();
-	
-	Table2 table4;
-	Table2 table5("name5", "INT");
-	Table2 table6;
-
-	table4.print();
-	table5.print();
-	table6.print();
-	
-	return 0;
+    return 0;
 }
