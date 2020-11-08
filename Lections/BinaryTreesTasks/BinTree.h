@@ -29,6 +29,7 @@ class BinTree{
     void remove(const T&);
     void destroy();
     void count(); //TASK 19.1
+    void countEvens(); //TASK 19.2
     ~BinTree();
 
     private:
@@ -39,6 +40,7 @@ class BinTree{
     void deleteElement(const T&, Node<T>*&);
     void destroyTree(Node<T>*);
     T countElements(Node<T>*, size_t);
+    T countEvenElements(Node<T>*, size_t);
 
 };
 
@@ -77,7 +79,13 @@ void BinTree<T>:: destroy(){
 //TASK19.1
 template<class T>
 void BinTree<T>:: count(){
-    cout << countElements(this->root, 1);
+    cout <<"Binary Tree's elements: " <<  countElements(this->root, 1);
+}
+
+
+template<class T>
+void BinTree<T>:: countEvens(){
+    cout << "Binary Tree's even elements: " << countEvenElements(this->root, 0) << endl;
 }
 
 
@@ -211,4 +219,37 @@ void BinTree<T>:: deleteElement(const T& element, Node<T>*& node){
     }
 
     return cnt;
+ }
+
+
+ //TASK 19.2
+ template<class T>
+ T BinTree<T>:: countEvenElements(Node<T>* node, size_t cnt){
+
+     //if(node->left->data == 2) cout<<"da";
+
+     if(node){
+
+         if(node->data % 2 == 0){
+             cnt++;
+         }
+
+         if(node->left && (node->left->data % 2 == 0)){
+             countEvenElements(node->left, cnt++);
+         }
+         else{
+             countEvenElements(node->left, cnt);
+         } 
+
+        if(node->right && (node->right->data % 2 == 0)){
+            countEvenElements(node->right, cnt++);
+        }
+        else{
+            countEvenElements(node->right, cnt);
+        }
+
+     }
+     
+
+     return cnt;
  }
