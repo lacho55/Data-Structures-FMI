@@ -25,8 +25,13 @@ int main(){
    //TASK 19.2
    tree.countEvens();
 
+   //TASK 19.3
    std:: cout << tree.searchCount(even);
-    // call_predicate(4.0, foo);
+   std:: cout << std:: endl;
+
+   //TASK19.4
+   std:: cout <<"Tree's height: " << tree.height();
+    
 
     return 0;
 }
