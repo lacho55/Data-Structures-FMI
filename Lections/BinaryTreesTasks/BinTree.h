@@ -31,6 +31,7 @@ class BinTree{
     void count(); //TASK 19.1
     void countEvens(); //TASK 19.2
     int searchCount (bool (*pred)(const T&)); //TASK 19.3
+    int height(); // TASK 19.4
     ~BinTree();
 
     private:
@@ -43,6 +44,7 @@ class BinTree{
     T countElements(Node<T>*, size_t);
     T countEvenElements(Node<T>*, size_t);
     T countPredElements(Node<T>*, bool (*pred)(const T&), size_t);
+    T estimateHeight(Node<T>*, size_t, size_t );
 
 };
 
@@ -97,6 +99,17 @@ template<class T>
 int BinTree<T>:: searchCount(bool (*pred)(const T& data)){
 
     return countPredElements(this->root, pred, 0);
+}
+
+
+//TASK 19.4
+template<class T>
+int BinTree<T>:: height(){
+    if(this->root){
+        return estimateHeight(this->root, 0, 0);
+    }
+
+    return 0;
 }
 
 
@@ -292,4 +305,38 @@ void BinTree<T>:: deleteElement(const T& element, Node<T>*& node){
      }
 
      return cnt;
+ }
+
+
+ //TASK 19.4
+ template<class T>
+ T BinTree<T>:: estimateHeight(Node<T>* node, size_t cntL, size_t cntR){
+     //doube chechinkg if we somehow use this method in the near future
+
+    Node<T>* maxLeft = node;
+    Node<T>* maxRight = node;
+
+    if(node){
+        cntL++;
+        cntR++;
+    }
+
+    while(maxLeft->left){
+        maxLeft = maxLeft->left;
+        cntL++;
+    }
+
+    while(maxRight->right){
+        maxRight = maxRight->right;
+        cntR++;
+    }  
+
+    if(cntL > cntR){
+        return cntL;
+    }
+    else{
+        return cntR;
+    }
+
+   
  }
