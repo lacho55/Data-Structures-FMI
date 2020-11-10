@@ -38,6 +38,9 @@ int main(){
    std:: cout << std:: endl;
    tree.countLeaves();
 
+   //TASK 19.6
+   std:: cout << std::endl;
+   tree.maxLeaf();
     
 
     return 0;
