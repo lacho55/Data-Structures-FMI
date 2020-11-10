@@ -13,6 +13,9 @@ struct Node{
         left = newLeft;
         right = newRigth;
     }
+    bool operator < (const Node<T>& other){
+        return (this->data < other->data);
+    }
 };
 
 
@@ -31,8 +34,9 @@ class BinTree{
     void count(); //TASK 19.1
     void countEvens(); //TASK 19.2
     int searchCount (bool (*pred)(const T&)); //TASK 19.3
-    int height(); // TASK 19.4
-    void countLeaves(); // TASK 19.5
+    int height(); //TASK 19.4
+    void countLeaves(); //TASK 19.5
+    void maxLeaf(); //TASK 19.6
     ~BinTree();
 
     private:
@@ -47,6 +51,7 @@ class BinTree{
     T countPredElements(Node<T>*, bool (*pred)(const T&), size_t);
     T estimateHeight(Node<T>*, size_t, size_t );
     T countAllLeaves(Node<T>*);
+    T maxLeafHelper(Node<T>*);
 
 };
 
@@ -119,6 +124,19 @@ int BinTree<T>:: height(){
 template<class T>
 void BinTree<T>:: countLeaves(){
     cout << "All Leaves are " << countAllLeaves(this->root);
+}
+
+
+//TASK 19.6
+template<class T>
+void BinTree<T>:: maxLeaf(){
+
+    if(maxLeafHelper(this->root) == -1){
+        cout << "There are no leaves!" << endl;
+    }
+    else{
+        cout << "Max leaf: " << maxLeafHelper(this->root);
+    }
 }
 
 
@@ -361,7 +379,28 @@ void BinTree<T>:: deleteElement(const T& element, Node<T>*& node){
          return 1;
      }
      else{
-         return countAllLeaves(node->left,0) + countAllLeaves(node->right, 0);
-     }
-     
+         return countAllLeaves(node->left) + countAllLeaves(node->right);
+     }   
+ }
+
+
+ //TASK 19.6
+ template<class T>
+ T BinTree<T>:: maxLeafHelper(Node<T>* node){
+
+    if(node){
+        if(!node->left && !node->right){
+            return node->data;
+        }
+        else if(node->left >= node->right){
+                maxLeafHelper(node->left);
+            }
+            else{
+                maxLeafHelper(node->right);
+            }
+        
+    }
+    else{
+        return -1;
+    }
  }
