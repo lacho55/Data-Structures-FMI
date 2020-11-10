@@ -1,4 +1,7 @@
 #pragma once
+#include <string>
+#include <typeinfo>       // operator typeid
+#include <exception>
 using namespace std;
 
 
@@ -37,6 +40,7 @@ class BinTree{
     int height(); //TASK 19.4
     void countLeaves(); //TASK 19.5
     void maxLeaf(); //TASK 19.6
+    T& getElement (const char *); //TASK 19.7
     ~BinTree();
 
     private:
@@ -52,6 +56,7 @@ class BinTree{
     T estimateHeight(Node<T>*, size_t, size_t );
     T countAllLeaves(Node<T>*);
     T maxLeafHelper(Node<T>*);
+    T& getElementHelper(Node<T>*, const char*);
 
 };
 
@@ -137,6 +142,21 @@ void BinTree<T>:: maxLeaf(){
     else{
         cout << "Max leaf: " << maxLeafHelper(this->root);
     }
+}
+
+
+//TASK 19.7
+template<class T>
+T& BinTree<T>:: getElement(const char* s){
+
+   //return getElementHelper(this->root, s);
+
+   if(this->root == nullptr){
+       throw "ERROR!";	
+   }
+   else{
+       return getElementHelper(this->root, s);
+   }
 }
 
 
@@ -402,5 +422,26 @@ void BinTree<T>:: deleteElement(const T& element, Node<T>*& node){
     }
     else{
         return -1;
+    }
+ }
+
+
+//TASK 19.7
+template<class T>
+T& BinTree<T>:: getElementHelper(Node<T>* node, const char* s){
+     
+    int i = 0;
+
+     if(*(s) == '\0'){
+         return node->data;
+     }
+     else if(*(s) == 'L' && node->left != nullptr){
+         getElementHelper(node->left, (s + 1));
+     }
+     else if(*(s) == 'R' && node->right != nullptr){
+         getElementHelper(node->right, (s + 1));
+     }
+    else{
+        throw "ERROR!";
     }
  }
