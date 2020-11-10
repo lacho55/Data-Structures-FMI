@@ -8,10 +8,11 @@ bool even(const int& v) {
 int main(){
     BinTree<int> tree;
 
-    tree.insert(4);
-    tree.insert(3);
+    tree.insert(10);
     tree.insert(5);
-    tree.insert(52);
+    tree.insert(20);
+    tree.insert(15);
+    tree.insert(25);
 
   // tree.remove(4);
   // tree.remove(3);
@@ -30,7 +31,13 @@ int main(){
    std:: cout << std:: endl;
 
    //TASK19.4
-   std:: cout <<"Tree's height: " << tree.height();
+   std:: cout << "Tree's height: " << tree.height();
+   std:: cout << std:: endl;
+
+   //TASK 19.5
+   std:: cout << std:: endl;
+   tree.countLeaves();
+
     
 
     return 0;
