@@ -39,9 +39,21 @@ int main(){
    tree.countLeaves();
 
    //TASK 19.6
-   std:: cout << std::endl;
+   std:: cout << std:: endl;
    tree.maxLeaf();
     
+    //TASK 19.7
+    BinTree<int> newTree;
+
+    newTree.insert(10);
+    newTree.insert(5);
+    newTree.insert(20);
+    newTree.insert(15);
+    newTree.insert(25);
+
+    std:: cout << std:: endl;
+    std:: cout << "The element you are searhing for is " << newTree.getElement("L");
+
 
     return 0;
 }
