@@ -32,6 +32,7 @@ class BinTree{
     void countEvens(); //TASK 19.2
     int searchCount (bool (*pred)(const T&)); //TASK 19.3
     int height(); // TASK 19.4
+    void countLeaves(); // TASK 19.5
     ~BinTree();
 
     private:
@@ -45,6 +46,7 @@ class BinTree{
     T countEvenElements(Node<T>*, size_t);
     T countPredElements(Node<T>*, bool (*pred)(const T&), size_t);
     T estimateHeight(Node<T>*, size_t, size_t );
+    T countAllLeaves(Node<T>*);
 
 };
 
@@ -110,6 +112,13 @@ int BinTree<T>:: height(){
     }
 
     return 0;
+}
+
+
+//TASK 19.5
+template<class T>
+void BinTree<T>:: countLeaves(){
+    cout << "All Leaves are " << countAllLeaves(this->root);
 }
 
 
@@ -339,4 +348,20 @@ void BinTree<T>:: deleteElement(const T& element, Node<T>*& node){
     }
 
    
+ }
+
+
+ //TASK 19.5
+ template<class T>
+ T BinTree<T>:: countAllLeaves(Node<T>* node){
+     if(node == nullptr){
+         return 0;
+     }
+     else if(!node->left && !node->right){
+         return 1;
+     }
+     else{
+         return countAllLeaves(node->left,0) + countAllLeaves(node->right, 0);
+     }
+     
  }
