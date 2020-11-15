@@ -24,10 +24,12 @@ class BinTree{
         BinTree();
         void insert(const T&);//Task01
         void print() const;
+        void printLeaves() const; //Task02
 
     private:
         void insertHelper(const T&, Node<T>*&); //Task01
         void printHelper(const Node<T>*) const;
+        void printLeavesHelper(const Node<T>*) const; //Task02
 
 };
 
@@ -48,6 +50,19 @@ void BinTree<T>:: insert(const T& element){
 template<class T>
 void BinTree<T>:: print() const{
     printHelper(root);
+}
+
+
+//Task02
+template<class T>
+void BinTree<T>:: printLeaves() const{
+    if(root){
+        printLeavesHelper(root);
+    }
+    else{
+        std::cout << "There are no leaves !" <<std::endl;
+    }
+    
 }
 
 
@@ -94,14 +109,36 @@ void BinTree<T>:: printHelper(const Node<T>* node) const{
 }
 
 
+//Task02
+template<class T>
+void BinTree<T>:: printLeavesHelper(const Node<T>* node) const{ 
+
+    if(node == nullptr){
+        return;
+    }
+    else if(node->left == nullptr && node->right == nullptr){
+        printLeavesHelper(node->left);
+        std::cout << node->data << " ";
+    }
+    else{
+        printLeavesHelper(node->left);
+        printLeavesHelper(node->right);
+    }       
+
+}
+
+
 int main(){
     BinTree<int> tree;
 
-    tree.insert(1);
-    tree.insert(2);
-    tree.insert(3);
+    tree.insert(10);
+    tree.insert(5);
+    tree.insert(20);
+    tree.insert(15);
+    tree.insert(25);
 
-    tree.print();
+    //tree.print();
+    tree.printLeaves();
 
 
     return 0;
