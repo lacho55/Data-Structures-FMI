@@ -29,6 +29,7 @@ class DLList{
     DLList();
     DLList(const DLList<T>&);
     DLList<T>& operator= (const DLList<T>&);
+
     ~DLList();
 
     void print() const;
@@ -40,6 +41,7 @@ class DLList{
     Node<T>* range(int, int); //TASK02
     void removeAll(const T&); //TASK03
     void append(DLList<T>&); //TASK04
+    DLList<T>* concat(DLList<T>*, DLList<T>*); //TASK05
 
 };
 
@@ -303,6 +305,28 @@ void  DLList<T>:: append(DLList<T>& list2){
     }
 }
 
+
+//TASK05
+template<class T>
+DLList<T>* DLList<T>:: concat(DLList<T>* list1, DLList<T>* list2){
+
+    Node<T>* curr = list1->first;
+
+    while(curr != nullptr){
+        this->push_back(curr->data);
+        curr = curr->next;
+    }
+
+    curr = list2->first;
+
+    while(curr != nullptr){
+        this->push_back(curr->data);
+        curr = curr->next;
+    }
+
+    return this;
+}
+
 int main(){
     /*DLList<int> list;
 
@@ -351,7 +375,7 @@ int main(){
 
     */
     //TASK04
-    std::cout << "TASK04: " <<std::endl;
+    /*std::cout << "TASK04: " <<std::endl;
     DLList<int> list4, list5;
 
     list4.push_back(3);
@@ -363,7 +387,18 @@ int main(){
     list5.push_back(331);
     list5.push_back(126);
     
-    list4.append(list5);
+    list4.append(list5);*/
+
+    //TASK05
+    std::cout << "TASK05: " <<std::endl;
+    DLList<int> list6, list7, list8;
+
+    list7.push_back(2);
+    list7.push_back(5);
+    list8.push_back(22);
+    list8.push_back(41);
+
+    list6.concat(&list7, &list8)->print();
 
 
     return 0;
