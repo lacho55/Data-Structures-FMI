@@ -36,7 +36,7 @@ class DLList{
     void push_front(const T&);
 
     int count(const DLList<T>&, int) const; //TASK01
-    
+    Node<T>* range(int, int); //TASK02
 
 };
 
@@ -188,6 +188,40 @@ int DLList<T>:: count(const DLList<T>& list , int x) const{
     return counter;
 }
 
+
+//TASK02
+template<class T>
+Node<T>* DLList<T>:: range(int x, int y){
+    if(x <= y){
+
+        destroy();
+        Node<T>* curr = first;
+
+        while(x <= y){
+            Node<T>* toAdd = new Node<T>(x, nullptr, nullptr);
+
+            if(first == nullptr){
+                curr = first = last = toAdd;
+            }
+            else{
+                curr->next = toAdd;
+                toAdd->prev = curr;
+                curr = curr->next;
+            }
+
+            x++;
+        }
+
+        last = first;
+
+        return first;
+    }
+    else{
+        std::cout << "X is greater than Y!" << std::endl;
+        return nullptr;
+    }
+}
+
 int main(){
     DLList<int> list;
 
@@ -202,9 +236,13 @@ int main(){
     list.print();
 
     std::cout << std::endl;
+    //TASK01
+    std::cout << list.count(list,3) << std::endl;
 
-    std::cout << list.count(list,3);
-
+    //TASK02
+    DLList<int> list2;
+    
+    std:: cout << list2.range(1, 10)->data << std::endl;
 
 
     return 0;
