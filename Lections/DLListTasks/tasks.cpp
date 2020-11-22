@@ -1,4 +1,3 @@
-
 #include<iostream>
 
 
@@ -35,6 +34,9 @@ class DLList{
     void print() const;
     void push_back(const T&);
     void push_front(const T&);
+
+    int count(const DLList<T>&, int) const; //TASK01
+    
 
 };
 
@@ -167,6 +169,25 @@ void DLList<T>:: push_front(const T& newElem){
     }
 }
 
+
+//TASK01
+template<class T>
+int DLList<T>:: count(const DLList<T>& list , int x) const{
+
+    int counter = 0;
+
+    Node<T>* curr = first;
+
+    while(curr != nullptr){
+        if(curr->data == x){
+            counter++;
+        }
+        curr = curr->next;
+    }
+
+    return counter;
+}
+
 int main(){
     DLList<int> list;
 
@@ -175,8 +196,14 @@ int main(){
     list.push_back(3);
     
     list.push_front(5);
+    list.push_front(3);
+    list.push_front(4);
 
     list.print();
+
+    std::cout << std::endl;
+
+    std::cout << list.count(list,3);
 
 
 
