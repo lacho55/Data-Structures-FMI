@@ -37,6 +37,8 @@ class DLList{
 
     int count(const DLList<T>&, int) const; //TASK01
     Node<T>* range(int, int); //TASK02
+    void removeAll(const T&); //TASK03
+    void append(DLList<T>&); //TASK04
 
 };
 
@@ -222,6 +224,60 @@ Node<T>* DLList<T>:: range(int x, int y){
     }
 }
 
+
+//TASK03
+template<class T>
+void DLList<T>::removeAll(const T& x){
+
+    Node<T>* curr = first;
+
+    if(curr != nullptr){
+        
+        while(curr != nullptr){
+
+            if(curr->data == x){
+
+
+                 if(first->data == x){
+                    Node<T>* toDelete = first;
+                    first = first->next;
+                    first->prev = nullptr;
+                    delete toDelete;
+                    currentSize--;
+                }
+                else if(last->data == x){
+                    Node<T>* toDelete = last;
+                    last = last->prev;
+                    last->next = nullptr;
+                    delete toDelete;
+                    currentSize--;
+                }
+                
+                else{
+                   Node<T>* toDelete = curr;
+                    curr->prev->next = curr->next;
+                    curr->next->prev = curr->prev->prev;
+                    delete toDelete;
+                    currentSize--;
+                }
+                
+            }
+            curr = curr->next; 
+        }
+
+    }
+    else{
+        std::cout << "The list is empty !!!" << std::endl;
+    }
+}
+
+
+//TASK04
+template<class T>
+void DLList<T>:: append(DLList<T>& other){
+
+}
+
 int main(){
     DLList<int> list;
 
@@ -243,6 +299,35 @@ int main(){
     DLList<int> list2;
     
     std:: cout << list2.range(1, 10)->data << std::endl;
+
+
+    //TASK03
+    std::cout << "TASK03: " << std::endl;
+
+    DLList<int> list3, caller;
+
+    list3.push_back(1);
+    list3.push_back(3);
+    list3.push_back(2);
+    list3.push_front(5);
+    list3.push_front(3);
+    list3.push_front(4);
+
+
+    list3.print();
+    list3.removeAll(4);
+    list3.print();
+    list3.removeAll(2);
+    list3.print();
+    list3.removeAll(5);
+    list3.print();
+    list3.removeAll(3);
+    list3.print();
+    
+   // list3.removeAll(4);
+
+    //list3.print();
+    
 
 
     return 0;
