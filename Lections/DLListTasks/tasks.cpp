@@ -32,6 +32,7 @@ class DLList{
     ~DLList();
 
     void print() const;
+    bool empty() const;
     void push_back(const T&);
     void push_front(const T&);
 
@@ -131,6 +132,11 @@ void DLList<T>:: print() const{
     std::cout << std::endl;
 }
 
+
+template<class T>
+bool DLList<T>:: empty() const{
+   return (first == nullptr && last == nullptr);
+}
 
 template<class T>
 void DLList<T>:: push_back(const T& newElem){
@@ -274,12 +280,31 @@ void DLList<T>::removeAll(const T& x){
 
 //TASK04
 template<class T>
-void DLList<T>:: append(DLList<T>& other){
+void  DLList<T>:: append(DLList<T>& list2){
+    
+    if(this->empty() && list2.empty()){
+        std::cout << "Cannot append empty lists" <<std::endl;
+    }
+    else if(this->empty() && !list2.empty()){
+        list2.print();
+    }
+    else if(!this->empty() && list2.empty()){
+        this->print();
+    }
+    else{
+        Node<T>* toAdd = list2.first;
 
+        while(toAdd != nullptr){
+            this->push_back(toAdd->data);
+            toAdd = toAdd->next;
+        }
+
+        this->print();
+    }
 }
 
 int main(){
-    DLList<int> list;
+    /*DLList<int> list;
 
     list.push_back(1);
     list.push_back(2);
@@ -323,11 +348,22 @@ int main(){
     list3.print();
     list3.removeAll(3);
     list3.print();
-    
-   // list3.removeAll(4);
 
-    //list3.print();
+    */
+    //TASK04
+    std::cout << "TASK04: " <<std::endl;
+    DLList<int> list4, list5;
+
+    list4.push_back(3);
+    list4.push_back(5);
+    list4.push_back(8);
+    list4.push_back(25);
+    list5.push_back(1);
+    list5.push_back(53);
+    list5.push_back(331);
+    list5.push_back(126);
     
+    list4.append(list5);
 
 
     return 0;
