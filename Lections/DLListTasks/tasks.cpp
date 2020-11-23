@@ -1,4 +1,5 @@
 #include<iostream>
+#include<vector>
 
 
 template<class T>
@@ -42,6 +43,8 @@ class DLList{
     void removeAll(const T&); //TASK03
     void append(DLList<T>&); //TASK04
     DLList<T>* concat(DLList<T>*, DLList<T>*); //TASK05
+    void reverse(); //TASK06
+    void removeDuplicates(); //TASK07
 
 };
 
@@ -240,45 +243,40 @@ void DLList<T>::removeAll(const T& x){
     Node<T>* curr = first;
 
     if(curr != nullptr){
-        
+
         while(curr != nullptr){
 
-            if(curr->data == x){
-
-
-                 if(first->data == x){
-                    Node<T>* toDelete = first;
-                    first = first->next;
-                    first->prev = nullptr;
-                    delete toDelete;
-                    currentSize--;
-                }
-                else if(last->data == x){
-                    Node<T>* toDelete = last;
-                    last = last->prev;
-                    last->next = nullptr;
-                    delete toDelete;
-                    currentSize--;
-                }
-                
-                else{
-                   Node<T>* toDelete = curr;
-                    curr->prev->next = curr->next;
-                    curr->next->prev = curr->prev->prev;
-                    delete toDelete;
-                    currentSize--;
-                }
-                
-            }
-            curr = curr->next; 
+        if(first->data == x){
+            Node<T>* toDelete = first;
+            first = first->next;
+            first->prev = nullptr;
+            delete toDelete;
+            currentSize--;
+            curr = first;
+        }
+        if(last->data == x){
+            Node<T>* toDelete = last;
+            last = last->prev;
+            last->next = nullptr;
+            delete toDelete;
+            currentSize--;
         }
 
+        if(curr->data == x){
+            Node<T>* temp = curr->next;
+            curr->prev->next = curr->next;
+            curr->next->prev = curr->prev;
+            delete curr;
+            curr = temp;
+            currentSize--;
+        }
+            curr = curr->next;
+       }
     }
     else{
         std::cout << "The list is empty !!!" << std::endl;
     }
 }
-
 
 //TASK04
 template<class T>
@@ -326,6 +324,66 @@ DLList<T>* DLList<T>:: concat(DLList<T>* list1, DLList<T>* list2){
 
     return this;
 }
+
+
+//TASK06
+template<class T>
+void DLList<T>:: reverse(){
+
+   Node<T>* temp = nullptr;
+   Node<T>* curr = first;
+
+   while(curr != nullptr){
+       temp = curr->prev;
+       curr->prev = curr->next;
+       curr->next = temp;
+       curr = curr->prev;
+   }
+
+   if(temp != nullptr){
+       first = temp->prev;
+   }
+}
+
+
+//TASK07
+template<class T>
+void DLList<T>:: removeDuplicates(){
+    int counter = 1;
+
+
+    Node<T>* curr = first;
+    Node<T>* otherIterate = curr->next;
+
+    while(curr != nullptr && otherIterate != nullptr){  
+        
+        while(otherIterate != nullptr){
+            if(curr-> data == otherIterate->data){
+                counter++;
+            }
+
+            otherIterate = otherIterate->next;
+        }
+
+        int x = curr->data;
+
+        if(counter > 1){
+            removeAll(x);
+            curr = first;
+            otherIterate= curr->next;
+            counter = 1;
+            
+        }
+        else{
+            counter = 1;
+        curr = curr->next;
+        otherIterate = curr->next;
+        }        
+    }
+}
+
+
+
 
 int main(){
     /*DLList<int> list;
@@ -390,7 +448,7 @@ int main(){
     list4.append(list5);*/
 
     //TASK05
-    std::cout << "TASK05: " <<std::endl;
+    /*std::cout << "TASK05: " <<std::endl;
     DLList<int> list6, list7, list8;
 
     list7.push_back(2);
@@ -398,7 +456,37 @@ int main(){
     list8.push_back(22);
     list8.push_back(41);
 
-    list6.concat(&list7, &list8)->print();
+    list6.concat(&list7, &list8)->print();*/
+
+
+    //TASK06
+    /*DLList<int> list9;
+
+    list9.push_back(1);
+    list9.push_back(2);
+    list9.push_back(3);
+
+    list9.reverse();
+    list9.print();*/
+
+    //TASK07
+    std::cout << "TASK07: " << std::endl;
+    DLList<int> list10;
+
+    list10.push_back(1);
+    list10.push_back(2);
+    list10.push_back(1);
+    list10.push_back(5);
+    list10.push_back(2);
+    list10.push_back(1);
+
+    list10.print();
+
+    list10.removeDuplicates();
+    //list10.removeAll(1);
+    //list10.removeAll(2);
+
+    list10.print();
 
 
     return 0;
